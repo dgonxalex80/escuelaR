@@ -1,6 +1,7 @@
-name: "my-website"
+name: "Aprendiendo Shiny "
+output_dir: "docs"
 navbar:
-  title: "My Website"
+  title: " "
   left:
     - text: "Home"
       href: index.html
