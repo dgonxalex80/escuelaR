@@ -1,0 +1,30 @@
+---
+title: "**Aprendiendo Shiny**"
+author: "Daniel Enrique Gonzalez"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br/><br/>
+
+### **Bookdown interesantes**
+
+
+* [Aplicaciones shiny de grado de producción en ingeniería](https://engineering-shiny.org/index.html)
+
+* [Suplemento de Shiny en producción](https://kellobri.github.io/shiny-prod-book/)
+
+* [Cómo crear una aplicación shiny desde ceero](https://bookdown.org/hadrien/how_to_build_a_shiny_app_from_scratch/)
+
+* [Visualización interactiva de datos basada en web con R, plotly y shiny](https://plotly-r.com/)
+
+* [Excelentes interfaces de usiario con Shiny](https://unleash-shiny.rinterface.com/)
+
+* [PrioriTree: una utilidad interactiva para mejorar los análisis filodinámicos geográficos en BEAST](https://bookdown.org/jsigao/prioritree_manual/#overview)
+
+* [Guía de aplicación de EGM Shiny](https://bookdown.org/wjdtkddud555/egm_shiny_application/)
+
