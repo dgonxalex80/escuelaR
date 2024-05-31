@@ -1,0 +1,108 @@
+---
+title: "server.R"
+author: "Daniel Enrique Gonzalez"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br/><br/>
+
+### **Principales funciones (server.R)**
+
+<br/>
+
+| **Función/Concepto**  | **Sintaxis**                                                  | **Descripción**                                                                                                                                             |
+|-----------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `shinyServer()`       | `shinyServer(function(input, output, session) { ... })`       | Define la lógica del servidor para la aplicación Shiny.                                                                                                     |
+| `renderText()`        | `output$outputId <- renderText({ ... })`                      | Genera texto reactivo que se actualiza automáticamente cuando cambian las entradas del usuario.                                                             |
+| `renderPlot()`        | `output$outputId <- renderPlot({ ... })`                      | Genera gráficos reactivos que se actualizan automáticamente cuando cambian las entradas del usuario.                                                        |
+| `renderTable()`       | `output$outputId <- renderTable({ ... })`                     | Genera tablas reactivas que se actualizan automáticamente cuando cambian las entradas del usuario.                                                          |
+| `renderDataTable()`   | `output$outputId <- renderDataTable({ ... })`                 | Genera tablas interactivas utilizando el paquete `DT` que se actualizan automáticamente cuando cambian las entradas del usuario.                            |
+| `reactive()`          | `reactive({ ... })`                                           | Define una expresión reactiva que se recalcula automáticamente cuando cambian las entradas del usuario utilizadas en la expresión.                          |
+| `observe()`           | `observe({ ... })`                                            | Observa y ejecuta el código en su interior cada vez que cambian las entradas del usuario mencionadas en el bloque.                                          |
+| `observeEvent()`      | `observeEvent(eventExpr, handlerExpr)`                        | Observa un evento específico (como un botón) y ejecuta el código en su interior cuando ese evento ocurre.                                                   |
+| `eventReactive()`     | `eventReactive(eventExpr, valueExpr)`                         | Define una expresión reactiva que sólo se actualiza en respuesta a un evento específico.                                                                    |
+| `isolate()`           | `isolate({ ... })`                                            | Aísla una expresión reactiva para que no se recalculen automáticamente las dependencias reactivas internas.                                                 |
+| `session$sendCustomMessage()` | `session$sendCustomMessage(type, message)`          | Envía un mensaje personalizado desde el servidor a la interfaz de usuario, útil para integraciones con JavaScript.                                           |
+
+<br/><br/>
+
+### **Ejemplo**
+
+<br/>
+
+
+```{r, eval=FALSE}
+library(shiny)
+
+ui <- fluidPage(
+    titlePanel("Ejemplo de Shiny Server"),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("num", "Elige un número:", min = 1, max = 100, value = 50),
+            textInput("text", "Escribe algo:"),
+            actionButton("goButton", "Go")
+        ),
+        mainPanel(
+            plotOutput("plot"),
+            textOutput("textDisplay")
+        )
+    )
+)
+#-------------------------------------------------------------------------------
+server <- function(input, output) {
+    # Generar un gráfico reactivo
+    output$plot <- renderPlot({
+        plot(cars, main = paste("Número seleccionado:", input$num))
+    })
+    
+    # Generar texto reactivo
+    output$textDisplay <- renderText({
+        paste("Has escrito:", input$text)
+    })
+    
+    # Observar un evento específico (cuando se presiona el botón)
+    observeEvent(input$goButton, {
+        showModal(modalDialog(
+            title = "Acción del Botón",
+            paste("El botón fue presionado y el número seleccionado es:", input$num)
+        ))
+    })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+<br/><br/>
+
+### **Descripción de los Componentes**
+
+<br/>
+
+1. **`renderText()`**
+   - Se utiliza para generar y mostrar texto que se actualiza automáticamente cuando cambian las entradas del usuario. En el ejemplo, muestra el texto ingresado por el usuario.
+
+<br/>
+
+2. **`renderPlot()`**
+   - Se utiliza para generar gráficos que se actualizan automáticamente. En el ejemplo, se genera un gráfico de `cars` con el título que incluye el número seleccionado por el usuario.
+
+<br/>
+
+3. **`observeEvent()`**
+   - Se utiliza para observar eventos específicos como la acción de presionar un botón. En el ejemplo, muestra un modal cuando se presiona el botón "Go".
+
+<br/>
+
+4. **`showModal()`**
+   - Función que muestra un modal de diálogo con información personalizada.
+
+
+<br/>
+
+Estas funciones y conceptos son esenciales para definir la lógica del servidor en una aplicación Shiny y permiten crear interacciones dinámicas y reactivas basadas en las entradas del usuario.

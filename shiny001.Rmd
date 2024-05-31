@@ -1,0 +1,132 @@
+---
+title: "**Introducción**"
+author: "Daniel"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br/><br/>
+
+### **Introducción a Shiny**
+
+**Shiny** es un paquete de R que permite construir aplicaciones web interactivas directamente desde el lenguaje de programación R. Fue desarrollado por RStudio y es ampliamente utilizado para la visualización de datos y el desarrollo de dashboards interactivos.
+
+
+<br/><br/>
+
+### **Componentes de Shiny**
+
+* `ui.R`
+* `server.R`
+* `shinyApp(ui = ui, server = server)`
+
+<br/>
+
+Una aplicación Shiny generalmente se compone de dos partes principales:
+
+1. **Interfaz de Usuario (UI)**: Define cómo se verá la aplicación y qué elementos interactivos (como botones, deslizadores y gráficos) estarán disponibles para el usuario.
+2. **Servidor (Server)**: Contiene la lógica de la aplicación, incluyendo cómo se deben procesar los datos y cómo deben reaccionar los elementos de la interfaz de usuario a las interacciones del usuario.
+
+<br/><br/>
+
+
+### Estrutura Básica de una Aplicación Shiny
+
+Aquí tienes un ejemplo simple de una aplicación Shiny:
+
+```{r, eval=FALSE} 
+library(shiny)
+
+# Definir la interfaz de usuario
+ui <- fluidPage(
+    titlePanel("Mi primera aplicación Shiny"),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("num", "Elige un número:", 
+                        min = 1, max = 100, value = 50)
+        ),
+        mainPanel(
+            textOutput("result")
+        )
+    )
+)
+
+# Definir la lógica del servidor
+server <- function(input, output) {
+    output$result <- renderText({
+        paste("El número elegido es:", input$num)
+    })
+}
+
+# Correr la aplicación Shiny
+shinyApp(ui = ui, server = server)
+```
+
+<br/><br/>
+
+### **Descripción de los Componentes**
+
+<br/>
+
+1. **UI (Interfaz de Usuario)**
+   - `fluidPage()`: Crea una página fluida que se adapta al tamaño de la ventana del navegador.
+   - `titlePanel()`: Agrega un título a la aplicación.
+   - `sidebarLayout()`, `sidebarPanel()`, y `mainPanel()`: Diseñan una disposición con una barra lateral y un panel principal.
+   - `sliderInput()`: Crea un control deslizante que permite al usuario elegir un valor.
+   - `textOutput()`: Define un espacio en la UI donde se mostrará texto generado en el servidor.
+
+<br/>
+
+2. **Server (Servidor)**
+   - `renderText()`: Genera texto reactivo que se actualiza automáticamente cuando cambia el valor del control deslizante.
+   - `input`: Contiene los valores de entrada proporcionados por el usuario.
+   - `output`: Define los elementos de salida que serán mostrados en la UI.
+
+<br/>
+
+3. **shinyApp()**
+   - `shinyApp(ui = ui, server = server)`: Combina la interfaz de usuario y la lógica del servidor en una aplicación completa que puede ser ejecutada.
+
+<br/><br/>
+
+### **Funcionalidades Adicionales**
+
+- **Reactive Values**: Permiten que la aplicación responda automáticamente a los cambios en las entradas del usuario.
+
+<br/>
+
+- **Reactive Expressions**: Optimizan la eficiencia de la aplicación asegurando que los cálculos sólo se realicen cuando sea necesario.
+
+<br/>
+
+- **Observe y ObserveEvent**: Permiten ejecutar código en respuesta a cambios en los valores reactivos.
+
+<br/><br/>
+
+### **Desplegando la Aplicación**
+
+Las aplicaciones Shiny pueden ser desplegadas en:
+- **Shiny Server**: Un servidor dedicado para aplicaciones Shiny.
+- **RStudio Connect**: Una plataforma de publicación y distribución.
+- **Shinyapps.io**: Un servicio de hospedaje basado en la nube.
+
+<br/><br/>
+
+### **Ejemplo Avanzado**
+
+Una aplicación más avanzada podría incluir múltiples controles de usuario, gráficos interactivos utilizando `plotOutput()` y `renderPlot()`, así como tablas dinámicas con `tableOutput()` y `renderTable()`.
+
+<br/><br/>
+
+### **Recursos Adicionales**
+
+Para aprender más sobre Shiny y explorar ejemplos más avanzados, puedes visitar:
+- [Documentación oficial de Shiny](https://shiny.rstudio.com/)
+- [Galería de aplicaciones Shiny](https://shiny.rstudio.com/gallery/)
+
+<br/>
+

@@ -7,4 +7,14 @@ navbar:
     - text: "About"
       href: about.html
     - text: "Shiny"
-      href: ebooks-shiny.html      
+      menu:
+        - text: "Bookdwn Shiny"   
+          href: ebooks-shiny.html   
+        - text: "Introducción"
+          href: shiny001.html
+        - text: "ui.R"
+          href: shiny002.html
+        - text: "server.R"
+          href: shiny003.html
+      
+      

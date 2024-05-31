@@ -1,0 +1,87 @@
+---
+title: "ui.R"
+author: "Daniel"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br/><br/>
+
+### **Principales funciones (ui.R)** 
+
+<br/>
+
+| **Función**          | **Sintaxis**                                                               | **Descripción**                                                                                                                                      |
+|----------------------|-----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `fluidPage()`        | `fluidPage(...elements)`                                                    | Crea una página fluida que se adapta al tamaño de la ventana del navegador.                                                                          |
+| `titlePanel()`       | `titlePanel(title)`                                                         | Agrega un título a la aplicación.                                                                                                                    |
+| `sidebarLayout()`    | `sidebarLayout(sidebarPanel, mainPanel)`                                    | Diseña una disposición con una barra lateral y un panel principal.                                                                                   |
+| `sidebarPanel()`     | `sidebarPanel(...elements)`                                                 | Define la barra lateral con varios elementos interactivos.                                                                                           |
+| `mainPanel()`        | `mainPanel(...elements)`                                                    | Define el panel principal donde se mostrarán los resultados o gráficos.                                                                              |
+| `sliderInput()`      | `sliderInput(inputId, label, min, max, value)`                              | Crea un control deslizante que permite al usuario elegir un valor.                                                                                   |
+| `textInput()`        | `textInput(inputId, label, value = "")`                                     | Crea un campo de texto para la entrada del usuario.                                                                                                  |
+| `numericInput()`     | `numericInput(inputId, label, value, min = NA, max = NA, step = NA)`        | Crea un campo de entrada numérica.                                                                                                                   |
+| `selectInput()`      | `selectInput(inputId, label, choices, selected = NULL, multiple = FALSE)`   | Crea un menú desplegable para seleccionar entre varias opciones.                                                                                     |
+| `checkboxInput()`    | `checkboxInput(inputId, label, value = FALSE)`                              | Crea una casilla de verificación.                                                                                                                    |
+| `radioButtons()`     | `radioButtons(inputId, label, choices, selected = NULL)`                    | Crea un grupo de botones de opción.                                                                                                                  |
+| `actionButton()`     | `actionButton(inputId, label, icon = NULL)`                                 | Crea un botón de acción que puede desencadenar eventos en el servidor.                                                                               |
+| `plotOutput()`       | `plotOutput(outputId, width = "100%", height = "400px")`                    | Define un espacio para mostrar gráficos generados en el servidor.                                                                                    |
+| `tableOutput()`      | `tableOutput(outputId)`                                                     | Define un espacio para mostrar tablas generadas en el servidor.                                                                                      |
+| `textOutput()`       | `textOutput(outputId)`                                                      | Define un espacio para mostrar texto generado en el servidor.                                                                                        |
+| `verbatimTextOutput()`| `verbatimTextOutput(outputId)`                                             | Define un espacio para mostrar texto con formato fijo (por ejemplo, código o resultados de consolas).                                                |
+| `dataTableOutput()`  | `dataTableOutput(outputId)`                                                 | Define un espacio para mostrar tablas interactivas generadas en el servidor utilizando `DT::renderDataTable()`.                                       |
+| `uiOutput()`         | `uiOutput(outputId)`                                                        | Espacio para elementos de interfaz de usuario generados dinámicamente en el servidor.                                                                |
+| `htmlOutput()`       | `htmlOutput(outputId)`                                                      | Espacio para contenido HTML generado en el servidor.                                                                                                |
+| `navbarPage()`       | `navbarPage(title, ...tabPanels)`                                           | Crea una interfaz de navegación con varias pestañas.                                                                                                |
+| `tabPanel()`         | `tabPanel(title, ...elements)`                                              | Define el contenido de cada pestaña dentro de una interfaz de navegación.                                                                            |
+| `fluidRow()`         | `fluidRow(...elements)`                                                     | Crea una fila fluida que puede contener varios elementos y se adapta al tamaño de la ventana del navegador.                                          |
+| `column()`           | `column(width, ...elements)`                                                | Define una columna dentro de una fila fluida. El ancho se especifica en una escala de 12.                                                            |
+
+<br/><br/>
+
+### **Ejemplo**
+
+<br/>
+
+
+```{r, eval=FALSE}
+library(shiny)
+
+ui <- fluidPage(
+    titlePanel("Ejemplo de Shiny UI"),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("num", "Elige un número:", min = 1, max = 100, value = 50),
+            textInput("text", "Escribe algo:"),
+            actionButton("goButton", "Go")
+        ),
+        mainPanel(
+            plotOutput("plot"),
+            textOutput("textDisplay")
+        )
+    )
+)
+
+server <- function(input, output) {
+    output$plot <- renderPlot({
+        plot(cars)
+    })
+    
+    output$textDisplay <- renderText({
+        paste("Has escrito:", input$text)
+    })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+<br/><br/>
+
+Este ejemplo crea una interfaz básica con un control deslizante, un campo de texto, un botón de acción, y áreas para mostrar un gráfico y texto.
+
+
+

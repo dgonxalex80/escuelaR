@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Daniel" />
 
+<meta name="date" content="2024-05-31" />
 
-<title>My Website</title>
+<title>Introducción</title>
 
 <script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -281,22 +283,161 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">My Website</h1>
+<h1 class="title toc-ignore"><strong>Introducción</strong></h1>
+<h4 class="author">Daniel</h4>
+<h4 class="date">2024-05-31</h4>
 
 </div>
 
 
-<p>Hello, Website!</p>
-<p>For more information about simple R Markdown websites, please read
-the documentation at <a
-href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html"
-class="uri">https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html</a>.</p>
-<p>Please also note that simple R Markdown sites are <em>not</em> based
-on <strong>blogdown</strong>. They are probably good for websites with
-only a few Rmd documents. For larger-scale and more sophisticated
-websites (such as blogs), you may want to use <strong>blogdown</strong>
-instead: <a href="https://github.com/rstudio/blogdown"
-class="uri">https://github.com/rstudio/blogdown</a>.</p>
+<p><br/><br/></p>
+<div id="introducción-a-shiny" class="section level3">
+<h3><strong>Introducción a Shiny</strong></h3>
+<p><strong>Shiny</strong> es un paquete de R que permite construir
+aplicaciones web interactivas directamente desde el lenguaje de
+programación R. Fue desarrollado por RStudio y es ampliamente utilizado
+para la visualización de datos y el desarrollo de dashboards
+interactivos.</p>
+<p><br/><br/></p>
+</div>
+<div id="componentes-de-shiny" class="section level3">
+<h3><strong>Componentes de Shiny</strong></h3>
+<ul>
+<li><code>ui.R</code></li>
+<li><code>server.R</code></li>
+<li><code>shinyApp(ui = ui, server = server)</code></li>
+</ul>
+<p><br/></p>
+<p>Una aplicación Shiny generalmente se compone de dos partes
+principales:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Interfaz de Usuario (UI)</strong>: Define cómo se verá la
+aplicación y qué elementos interactivos (como botones, deslizadores y
+gráficos) estarán disponibles para el usuario.</li>
+<li><strong>Servidor (Server)</strong>: Contiene la lógica de la
+aplicación, incluyendo cómo se deben procesar los datos y cómo deben
+reaccionar los elementos de la interfaz de usuario a las interacciones
+del usuario.</li>
+</ol>
+<p><br/><br/></p>
+</div>
+<div id="estrutura-básica-de-una-aplicación-shiny"
+class="section level3">
+<h3>Estrutura Básica de una Aplicación Shiny</h3>
+<p>Aquí tienes un ejemplo simple de una aplicación Shiny:</p>
+<pre class="r"><code>library(shiny)
+
+# Definir la interfaz de usuario
+ui &lt;- fluidPage(
+    titlePanel(&quot;Mi primera aplicación Shiny&quot;),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput(&quot;num&quot;, &quot;Elige un número:&quot;, 
+                        min = 1, max = 100, value = 50)
+        ),
+        mainPanel(
+            textOutput(&quot;result&quot;)
+        )
+    )
+)
+
+# Definir la lógica del servidor
+server &lt;- function(input, output) {
+    output$result &lt;- renderText({
+        paste(&quot;El número elegido es:&quot;, input$num)
+    })
+}
+
+# Correr la aplicación Shiny
+shinyApp(ui = ui, server = server)</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="descripción-de-los-componentes" class="section level3">
+<h3><strong>Descripción de los Componentes</strong></h3>
+<p><br/></p>
+<ol style="list-style-type: decimal">
+<li><strong>UI (Interfaz de Usuario)</strong>
+<ul>
+<li><code>fluidPage()</code>: Crea una página fluida que se adapta al
+tamaño de la ventana del navegador.</li>
+<li><code>titlePanel()</code>: Agrega un título a la aplicación.</li>
+<li><code>sidebarLayout()</code>, <code>sidebarPanel()</code>, y
+<code>mainPanel()</code>: Diseñan una disposición con una barra lateral
+y un panel principal.</li>
+<li><code>sliderInput()</code>: Crea un control deslizante que permite
+al usuario elegir un valor.</li>
+<li><code>textOutput()</code>: Define un espacio en la UI donde se
+mostrará texto generado en el servidor.</li>
+</ul></li>
+</ol>
+<p><br/></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Server (Servidor)</strong>
+<ul>
+<li><code>renderText()</code>: Genera texto reactivo que se actualiza
+automáticamente cuando cambia el valor del control deslizante.</li>
+<li><code>input</code>: Contiene los valores de entrada proporcionados
+por el usuario.</li>
+<li><code>output</code>: Define los elementos de salida que serán
+mostrados en la UI.</li>
+</ul></li>
+</ol>
+<p><br/></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>shinyApp()</strong>
+<ul>
+<li><code>shinyApp(ui = ui, server = server)</code>: Combina la interfaz
+de usuario y la lógica del servidor en una aplicación completa que puede
+ser ejecutada.</li>
+</ul></li>
+</ol>
+<p><br/><br/></p>
+</div>
+<div id="funcionalidades-adicionales" class="section level3">
+<h3><strong>Funcionalidades Adicionales</strong></h3>
+<ul>
+<li><strong>Reactive Values</strong>: Permiten que la aplicación
+responda automáticamente a los cambios en las entradas del usuario.</li>
+</ul>
+<p><br/></p>
+<ul>
+<li><strong>Reactive Expressions</strong>: Optimizan la eficiencia de la
+aplicación asegurando que los cálculos sólo se realicen cuando sea
+necesario.</li>
+</ul>
+<p><br/></p>
+<ul>
+<li><strong>Observe y ObserveEvent</strong>: Permiten ejecutar código en
+respuesta a cambios en los valores reactivos.</li>
+</ul>
+<p><br/><br/></p>
+</div>
+<div id="desplegando-la-aplicación" class="section level3">
+<h3><strong>Desplegando la Aplicación</strong></h3>
+<p>Las aplicaciones Shiny pueden ser desplegadas en: - <strong>Shiny
+Server</strong>: Un servidor dedicado para aplicaciones Shiny. -
+<strong>RStudio Connect</strong>: Una plataforma de publicación y
+distribución. - <strong>Shinyapps.io</strong>: Un servicio de hospedaje
+basado en la nube.</p>
+<p><br/><br/></p>
+</div>
+<div id="ejemplo-avanzado" class="section level3">
+<h3><strong>Ejemplo Avanzado</strong></h3>
+<p>Una aplicación más avanzada podría incluir múltiples controles de
+usuario, gráficos interactivos utilizando <code>plotOutput()</code> y
+<code>renderPlot()</code>, así como tablas dinámicas con
+<code>tableOutput()</code> y <code>renderTable()</code>.</p>
+<p><br/><br/></p>
+</div>
+<div id="recursos-adicionales" class="section level3">
+<h3><strong>Recursos Adicionales</strong></h3>
+<p>Para aprender más sobre Shiny y explorar ejemplos más avanzados,
+puedes visitar: - <a href="https://shiny.rstudio.com/">Documentación
+oficial de Shiny</a> - <a
+href="https://shiny.rstudio.com/gallery/">Galería de aplicaciones
+Shiny</a></p>
+<p><br/></p>
+</div>
 
 
 
