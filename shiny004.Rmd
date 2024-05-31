@@ -1,0 +1,261 @@
+---
+title: "botones"
+author: "Daniel Enrique Gonzalez"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### **Botones de entrada** 
+
+
+```{r, eval=FALSE}
+library(shiny)
+
+# Interfaz de Usuario
+ui <- fluidPage(
+  titlePanel("Ejemplo de Todos los Botones de Shiny"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slider", "Slider Input:", min = 1, max = 100, value = 50),
+      textInput("text", "Text Input:", value = "Escribe algo"),
+      numericInput("numeric", "Numeric Input:", value = 10, min = 1, max = 100),
+      selectInput("select", "Select Input:", choices = c("Opción 1", "Opción 2", "Opción 3")),
+      checkboxInput("checkbox", "Checkbox Input:", value = FALSE),
+      radioButtons("radio", "Radio Buttons:", choices = c("Opción A", "Opción B", "Opción C")),
+      actionButton("action", "Action Button"),
+      br(),
+      br(),
+      dataTableOutput("table")
+    ),
+    mainPanel(
+      textOutput("textOutput"),
+      verbatimTextOutput("verbatimTextOutput"),
+      plotOutput("plotOutput"),
+      tableOutput("tableOutput")
+    )
+  )
+)
+
+# Lógica del Servidor
+server <- function(input, output, session) {
+  # Texto reactivo
+  output$textOutput <- renderText({
+    paste("Text Input:", input$text)
+  })
+  
+  # Texto verbatim reactivo
+  output$verbatimTextOutput <- renderPrint({
+    list(
+      Slider = input$slider,
+      Numeric = input$numeric,
+      Select = input$select,
+      Checkbox = input$checkbox,
+      Radio = input$radio,
+      Action = input$action
+    )
+  })
+  
+  # Gráfico reactivo
+  output$plotOutput <- renderPlot({
+    plot(1:input$slider, main = paste("Plot con Slider hasta:", input$slider))
+  })
+  
+  # Tabla reactiva
+  output$tableOutput <- renderTable({
+    data.frame(
+      Parámetro = c("Slider", "Text", "Numeric", "Select", "Checkbox", "Radio"),
+      Valor = c(input$slider, input$text, input$numeric, input$select, input$checkbox, input$radio)
+    )
+  })
+  
+  # Tabla interactiva reactiva
+  output$table <- renderDataTable({
+    data.frame(
+      Parámetro = c("Slider", "Text", "Numeric", "Select", "Checkbox", "Radio", "Action"),
+      Valor = c(input$slider, input$text, input$numeric, input$select, input$checkbox, input$radio, input$action)
+    )
+  })
+  
+  # Acción del botón
+  observeEvent(input$action, {
+    showModal(modalDialog(
+      title = "Acción del Botón",
+      paste("El botón fue presionado. Valor actual del slider:", input$slider)
+    ))
+  })
+}
+
+# Ejecutar la aplicación
+shinyApp(ui = ui, server = server)
+```
+
+
+<br/><br/>
+
+### **Descripción de los Componentes**
+
+1. **Entradas de Usuario:**
+   - `sliderInput()`: Control deslizante.
+   - `textInput()`: Campo de texto.
+   - `numericInput()`: Campo de entrada numérica.
+   - `selectInput()`: Menú desplegable.
+   - `checkboxInput()`: Casilla de verificación.
+   - `radioButtons()`: Botones de opción.
+   - `actionButton()`: Botón de acción.
+
+<br/><br/>
+
+2. **Salidas Reactivas:**
+   - `textOutput()`: Muestra el texto ingresado.
+   - `verbatimTextOutput()`: Muestra los valores de todas las entradas en formato de texto fijo.
+   - `plotOutput()`: Muestra un gráfico reactivo.
+   - `tableOutput()`: Muestra una tabla reactiva.
+   - `dataTableOutput()`: Muestra una tabla interactiva usando `DT`.
+
+<br/><br/>
+
+3. **Eventos Observados:**
+   - `observeEvent()`: Observa el evento de presionar el botón de acción y muestra un modal con el valor del slider.
+
+<br/><br/>
+
+Este ejemplo demuestra cómo utilizar todos los tipos de botones de entrada en Shiny y cómo generar salidas reactivas basadas en estos botones.
+
+
+<br/><br/><br/><br/>
+
+
+### **Tabla botones de entrada - salidas reactivas** 
+
+| **Botón de Entrada**     | **Función de Entrada**                                     | **Salida Reactiva**           | **Función de Salida**                           | **Descripción**                                                                            |
+|--------------------------|------------------------------------------------------------|-------------------------------|-------------------------------------------------|--------------------------------------------------------------------------------------------|
+| **Slider Input**         | `sliderInput(inputId, ...)`                                | Texto Reactivo                | `renderText({ ... })`                           | Muestra el valor seleccionado en el control deslizante.                                    |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra el valor del control deslizante en formato de texto fijo.                          |
+|                          |                                                            | Gráfico Reactivo              | `renderPlot({ ... })`                           | Genera un gráfico basado en el valor del control deslizante.                               |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con el valor seleccionado en el control deslizante.                      |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con el valor seleccionado en el control deslizante.          |
+| **Text Input**           | `textInput(inputId, ...)`                                  | Texto Reactivo                | `renderText({ ... })`                           | Muestra el texto ingresado por el usuario.                                                 |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra el texto ingresado en formato de texto fijo.                                       |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con el texto ingresado.                                                  |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con el texto ingresado.                                      |
+| **Numeric Input**        | `numericInput(inputId, ...)`                               | Texto Reactivo                | `renderText({ ... })`                           | Muestra el valor numérico ingresado.                                                       |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra el valor numérico en formato de texto fijo.                                        |
+|                          |                                                            | Gráfico Reactivo              | `renderPlot({ ... })`                           | Genera un gráfico basado en el valor numérico ingresado.                                   |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con el valor numérico ingresado.                                         |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con el valor numérico ingresado.                             |
+| **Select Input**         | `selectInput(inputId, ...)`                                | Texto Reactivo                | `renderText({ ... })`                           | Muestra la opción seleccionada en el menú desplegable.                                     |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra la opción seleccionada en formato de texto fijo.                                   |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con la opción seleccionada.                                              |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con la opción seleccionada.                                  |
+| **Checkbox Input**       | `checkboxInput(inputId, ...)`                              | Texto Reactivo                | `renderText({ ... })`                           | Muestra el estado de la casilla de verificación.                                           |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra el estado de la casilla de verificación en formato de texto fijo.                  |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con el estado de la casilla de verificación.                             |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con el estado de la casilla de verificación.                 |
+| **Radio Buttons**        | `radioButtons(inputId, ...)`                               | Texto Reactivo                | `renderText({ ... })`                           | Muestra la opción seleccionada en los botones de opción.                                   |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra la opción seleccionada en formato de texto fijo.                                   |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con la opción seleccionada.                                              |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con la opción seleccionada.                                  |
+| **Action Button**        | `actionButton(inputId, ...)`                               | Texto Reactivo                | `renderText({ ... })`                           | Muestra el estado del botón de acción.                                                     |
+|                          |                                                            | Texto Verbatim Reactivo       | `renderPrint({ ... })`                          | Muestra el estado del botón de acción en formato de texto fijo.                            |
+|                          |                                                            | Tabla Reactiva                | `renderTable({ ... })`                          | Muestra una tabla con el estado del botón de acción.                                       |
+|                          |                                                            | Tabla Interactiva             | `renderDataTable({ ... })`                      | Muestra una tabla interactiva con el estado del botón de acción.                           |
+|                          |                                                            | Evento Observado              | `observeEvent(input$action, { ... })`           | Ejecuta código específico cuando se presiona el botón de acción.                           |
+
+
+<br/><br/>
+
+### **Ejemplo Completo**
+
+```{r, eval=FALSE}
+library(shiny)
+
+# Interfaz de Usuario
+ui <- fluidPage(
+  titlePanel("Ejemplo de Todos los Botones de Shiny"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slider", "Slider Input:", min = 1, max = 100, value = 50),
+      textInput("text", "Text Input:", value = "Escribe algo"),
+      numericInput("numeric", "Numeric Input:", value = 10, min = 1, max = 100),
+      selectInput("select", "Select Input:", choices = c("Opción 1", "Opción 2", "Opción 3")),
+      checkboxInput("checkbox", "Checkbox Input:", value = FALSE),
+      radioButtons("radio", "Radio Buttons:", choices = c("Opción A", "Opción B", "Opción C")),
+      actionButton("action", "Action Button"),
+      br(),
+      br(),
+      dataTableOutput("table")
+    ),
+    mainPanel(
+      textOutput("textOutput"),
+      verbatimTextOutput("verbatimTextOutput"),
+      plotOutput("plotOutput"),
+      tableOutput("tableOutput")
+    )
+  )
+)
+
+# Lógica del Servidor
+server <- function(input, output, session) {
+  # Texto reactivo
+  output$textOutput <- renderText({
+    paste("Text Input:", input$text)
+  })
+  
+  # Texto verbatim reactivo
+  output$verbatimTextOutput <- renderPrint({
+    list(
+      Slider = input$slider,
+      Numeric = input$numeric,
+      Select = input$select,
+      Checkbox = input$checkbox,
+      Radio = input$radio,
+      Action = input$action
+    )
+  })
+  
+  # Gráfico reactivo
+  output$plotOutput <- renderPlot({
+    plot(1:input$slider, main = paste("Plot con Slider hasta:", input$slider))
+  })
+  
+  # Tabla reactiva
+  output$tableOutput <- renderTable({
+    data.frame(
+      Parámetro = c("Slider", "Text", "Numeric", "Select", "Checkbox", "Radio"),
+      Valor = c(input$slider, input$text, input$numeric, input$select, input$checkbox, input$radio)
+    )
+  })
+  
+  # Tabla interactiva reactiva
+  output$table <- renderDataTable({
+    data.frame(
+      Parámetro = c("Slider", "Text", "Numeric", "Select", "Checkbox", "Radio", "Action"),
+      Valor = c(input$slider, input$text, input$numeric, input$select, input$checkbox, input$radio, input$action)
+    )
+  })
+  
+  # Acción del botón
+  observeEvent(input$action, {
+    showModal(modalDialog(
+      title = "Acción del Botón",
+      paste("El botón fue presionado. Valor actual del slider:", input$slider)
+    ))
+  })
+}
+
+# Ejecutar la aplicación
+shinyApp(ui = ui, server = server)
+```
+
+
+<br/><br/>
+
+
+
+
+
+

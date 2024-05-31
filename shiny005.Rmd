@@ -1,0 +1,119 @@
+---
+title: "Ejemplos"
+author: "Daniel Enrique Gonzalez"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br/><br/>
+
+
+## Diseño básico
+
+```{r, eval=FALSE}
+# Minimum viable example of a shiny app with a sidebar layout
+
+library(shiny)
+
+# Define UI
+ui <- fluidPage(
+  # Sidebar Layout
+  sidebarLayout(
+    # Sidebar Layout Elements
+    sidebarPanel = sidebarPanel("Replace this placeholder text with your input controls of choice."),
+    mainPanel = mainPanel(
+      "Replace this placeholder text with outputs, defined in the server function below,
+                                        you want displayed in the main panel."
+    )
+    
+  ))
+
+
+# Server function
+server <- function(input, output) {
+  
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+
+```
+
+
+<br/><br/>
+
+
+### Creación de cajas por columnas
+
+```{r, eval=FALSE}
+# Minimum viable example of a shiny app with a grid layout
+
+library(shiny)
+
+# Define UI
+ui <- fluidPage(
+  # Grid Layout
+# genera una fila al inicio   
+  fluidRow(wellPanel("Top row")),
+# genera 3 cajas de ancho 2, justificadas a la izquierda   
+  fluidRow(column(width = 2, wellPanel("Bottom row, column 1, width 4")),
+           column(width = 2, wellPanel("Bottom row, column 2, width 4")),
+           column(width = 2, wellPanel("Bottom row, column 3, width 4"))))
+
+
+# Server function
+server <- function(input, output) {
+  
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
+<br/><br/>
+
+### **Creación de una ventana para escoger una opción**
+
+
+```{r, eval=FALSE}
+# Example of a shiny application with a sidebar layout and a selectInput control widget
+library(shiny)
+
+# Define UI
+ui <- fluidPage(
+  # Sidebar Layout
+  sidebarLayout(
+    # Sidebar Layout Elements (i.e. the panels)
+    sidebarPanel = sidebarPanel(
+      #Control Widget
+      selectInput(
+        inputId = "input_1",
+        label = "Short description of control widget",
+        choices = c(
+          "Iowa" = "IA",
+          "Colorado" = "CO",
+          "Massachusetts" = "MA"
+        )
+      )
+    ),
+    mainPanel = mainPanel(
+      "Replace this placeholder text with outputs,
+      defined in the server function below,
+      you want displayed in the main panel."
+    )
+    
+  ))
+
+# Server function
+server <- function(input, output) {
+  
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
