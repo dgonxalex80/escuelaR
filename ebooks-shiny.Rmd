@@ -28,3 +28,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * [Guía de aplicación de EGM Shiny](https://bookdown.org/wjdtkddud555/egm_shiny_application/)
 
+
+
+<br/><br/><br/><br/>
+
+### Páginas de interes
+
+* [Guía de diseño de aplicaciones](https://shiny.posit.co/r/articles/build/layout-guide/)
