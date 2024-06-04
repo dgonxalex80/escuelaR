@@ -28,7 +28,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * [Guía de aplicación de EGM Shiny](https://bookdown.org/wjdtkddud555/egm_shiny_application/)
 
+* [Excelentes interfaces de usuario con Shiny](https://unleash-shiny.rinterface.com/)
 
+* [Suplementos de Shiny en producción](https://kellobri.github.io/shiny-prod-book/)
 
 <br/><br/><br/><br/>
 
